@@ -1,38 +1,58 @@
-# Tor Exit Nodes
+# Tor Exit Nodes Checker
 
-Design and implement a service checking whether provided IPv4 address is a [Tor](https://www.torproject.org/) exit node.
+## Service Description
 
-API of the service should:
-- respond with `HTTP 200 OK` and empty body on `HEAD /A.B.C.D` request when provided IP is a Tor exit node
-- respond with `HTTP 404 Not Found` and empty body on `HEAD /A.B.C.D` request when provided IP *is not* a Tor exit node
-- (nice to have) respond with `HTTP 200 OK` and JSON body (design the response) on `GET /A.B.C.D` request when provided IP is a Tor exit node
-- (nice to have) respond with `HTTP 404 Not Found` and empty body on `GET /A.B.C.D` request when provided IP *is not* a Tor exit node
+This service checks whether a provided IPv4 address is a [Tor](https://www.torproject.org/) exit node.
 
-Points above represent minimal required specification of the service's API - for example you are free to use additional HTTP status codes if it makes sense.
+### Made Assumptions
 
-You can find a list of current Tor exit nodes here: https://check.torproject.org/exit-addresses.
+1. **Tor exit nodes list is fetched from**: `https://check.torproject.org/exit-addresses`
+2. **Refresh rate for Tor exit nodes list**: Defined in the configuration file (default is 1 hour).
 
-## Non-functional requirements
+## Tech Stack
 
-- the service should:
-  - be dockerized
-  - cache Tor exit nodes for a specified amount of time
-  - include a health check
-- readme should be replaced with brief notes covering:
-  - service description with all made assumptions
-  - tech stack used (runtime environment, frameworks, key libraries)
-  - how to:
-    - build the service
-    - run automatic tests
-    - run the service locally
-  - what improvements would you make if you had more time
+- **Java**: 17
+- **Spring Boot**: 3.3.3
+- **Spring Data Redis**: For caching
+- **Docker**: For containerization
+- **Docker Compose**: To orchestrate the multi-container architecture
 
-## Evaluation criteria
+## How to Build the Service
 
-- alignment with the requirements
-- usage of best practices when dealing with edge cases that are not covered here
-- code quality and readability
-- presence and quality of (or lack of) automatic tests
-- commit history (thought process, commit messages)
+1. **Clone the repository**:
+    ```bash
+    git clone https://github.com/ynd-consult-ug/backend-exercise-aleksander-mysko
+    cd backend-exercise-aleksander-mysko
+    ```
 
-Your work should be handed off in a form of a PR to the private repository that you were given. You are responsible for picking a deadline for its delivery, communicating it and sticking to it.
+2. **Build the project using Maven**:
+    ```bash
+    mvn clean package
+    ```
+
+## How to Run Automatic Tests
+
+Run the following command to execute the tests:
+```bash
+mvn test
+```
+
+## How to Run the Service Locally
+
+**Prerequisites**:
+- Ensure [Docker](https://docs.docker.com/get-docker/) and [Docker Compose](https://docs.docker.com/compose/install/) are installed on your machine.
+- Ensure Redis is running, which will be automatically handled by Docker Compose.
+
+To run the service locally:
+
+1. **Build and start the containers**:
+    ```bash
+    sudo docker-compose up --build
+    ```
+
+This will start a Redis instance and the Tor Exit Node Checker service.
+
+## Improvements
+- Create automated tests to cover more edge cases.
+- Optimize the parsing function to handle larger datasets more efficiently.
+- Add comprehensive exception handling to ensure network failures and other errors are handled gracefully and throw appropriate custom exceptions where necessary.
