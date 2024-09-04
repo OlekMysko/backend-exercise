@@ -53,6 +53,6 @@ To run the service locally:
 This will start a Redis instance and the Tor Exit Node Checker service.
 
 ## Improvements
-- Create automated tests to cover more edge cases.
+- Create an endpoint to refresh Tor exit nodes
 - Optimize the parsing function to handle larger datasets more efficiently.
 - Add comprehensive exception handling to ensure network failures and other errors are handled gracefully and throw appropriate custom exceptions where necessary.

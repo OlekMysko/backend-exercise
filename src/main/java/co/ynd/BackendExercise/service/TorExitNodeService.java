@@ -33,9 +33,8 @@ public class TorExitNodeService {
 
     @Cacheable("torExitNodes")
     public Set<String> getTorExitNodes() {
-        return torExitNodes;
+        return torExitNodes.isEmpty() ? getFallbackExitNodes() : torExitNodes;
     }
-
 
     @Scheduled(fixedRateString = "${tor.exit.nodes.refresh.rate}")
     @CacheEvict(value = "torExitNodes", allEntries = true)
