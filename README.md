@@ -52,9 +52,52 @@ To run the service locally:
 
 This will start a Redis instance and the Tor Exit Node Checker service.
 
+## API Endpoints
+
+### Check if an IP is a Tor exit node (HEAD request)
+
+**Endpoint**: `HEAD /ip/{ip}`
+- **Description**: Verifies if the provided IP address is a Tor exit node.
+- **Path Parameter**: `ip` - The IP address to be checked.
+- **Responses**:
+   - `200 OK` - The IP address is a Tor exit node.
+   - `400 Bad Request` - The IP address is not valid.
+   - `404 Not Found` - The IP address is not a Tor exit node.
+
+### Get information about an IP (GET request)
+
+**Endpoint**: `GET /ip/{ip}`
+- **Description**: Provides information if the provided IP address is a Tor exit node.
+- **Path Parameter**: `ip` - The IP address to be checked.
+- **Responses**:
+   - `200 OK` - The IP address is a Tor exit node.
+     ```json
+     {
+       "ipAddress": "string",
+       "isTorExitNode": true,
+       "message": "IP address is a Tor exit node"
+     }
+     ```
+   - `400 Bad Request` - The IP address is not valid.
+     ```json
+     {
+       "ipAddress": "string",
+       "isTorExitNode": false,
+       "message": "IP address is not valid"
+     }
+     ```
+   - `404 Not Found` - The IP address is not a Tor exit node.
+     ```json
+     {
+       "ipAddress": "string",
+       "isTorExitNode": false,
+       "message": "IP address is not a Tor exit node"
+     }
+     ```
+
 ## Improvements
-- Create an endpoint to refresh Tor exit nodes
+- Create an endpoint to refresh Tor exit nodes.
 - Optimize the parsing function to handle larger datasets more efficiently.
 - Add comprehensive exception handling to ensure network failures and other errors are handled gracefully and throw appropriate custom exceptions where necessary.
 
-## Built this app with just enough duct tape and code to get it running—optimization? Maybe in the next version, if coffee and time permit!
+## Built this app with just enough duct tape and code to get it running - optimization? Maybe in the next version, if coffee and time permit!
