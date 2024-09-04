@@ -1,4 +1,23 @@
 spring:
-  redis:
-    host: localhost
-    port: 6379
+  application:
+    name: BackendExercise
+  cache:
+    type: redis
+  data:
+    redis:
+      host: redis
+      port: 6379
+
+tor:
+  exit:
+    nodes:
+      url: https://check.torproject.org/exit-addresses
+      refresh:
+        rate: 3600000
+server:
+  port: 1024
+management:
+  endpoints:
+    web:
+      exposure:
+        include: health,info
